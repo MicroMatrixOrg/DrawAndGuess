@@ -51,6 +51,6 @@ const router = createRouter({
 })
 
 //路由优化，最后再做
-router.beforeEach((from, to, next) => {})
+// router.beforeEach((from, to, next) => {})
 
 export default router

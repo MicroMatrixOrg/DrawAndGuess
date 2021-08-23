@@ -1,5 +1,7 @@
 <template>
-  <router-view />
+  <div class="matrix-container-wrap">
+    <router-view />
+  </div>
 </template>
 
 <script lang="ts">
@@ -11,12 +13,10 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+.matrix-container-wrap {
+  height: 100vh;
+  width: 100vw;
+  margin: 0;
+  padding: 0;
 }
 </style>
