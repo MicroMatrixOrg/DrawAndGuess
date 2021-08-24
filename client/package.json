@@ -8,7 +8,9 @@
   },
   "dependencies": {
     "element-plus": "^1.0.2-beta.71",
+    "socket.io-client": "^4.1.3",
     "vue": "^3.0.5",
+    "vue-3-socket.io": "^1.0.4",
     "vue-router": "^4.0.6",
     "vuex": "^4.0.0"
   },

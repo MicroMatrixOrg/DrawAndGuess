@@ -1,5 +1,5 @@
 <template>
-  <div class=""></div>
+  <div class="game-container-wrap">游戏中心</div>
 </template>
 <script lang="ts">
 import { defineComponent, reactive, ref, h } from 'vue'

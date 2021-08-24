@@ -1,8 +1,9 @@
 import { InjectionKey } from 'vue'
 import { createStore, Store } from 'vuex'
+import socket from '../socket/index'
 
 export interface State {
-  count: number
+  connected: boolean
 }
 
 export const key: InjectionKey<Store<State>> = Symbol()
@@ -10,14 +11,23 @@ export const key: InjectionKey<Store<State>> = Symbol()
 export const store = createStore<State>({
   state() {
     return {
-      count: 0,
+      connected: false, //连接状态
     }
   },
   mutations: {
-    increment(state) {
-      state.count++
+    updateConnected(state, connected) {
+      state.connected = connected
     },
   },
-  actions: {},
+  actions: {
+    //检查用户名是否存在
+    checkUserExist(context, nickname) {
+      return new Promise((resolve, reject) => {
+        socket.emit('check_user_exist', nickname, (isExist: boolean) => {
+          resolve(isExist)
+        })
+      })
+    },
+  },
   getters: {},
 })

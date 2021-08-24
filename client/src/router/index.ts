@@ -7,7 +7,7 @@ import NotFoundComponent from '../page/error/404.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
-    path: '/game',
+    path: '/home',
     name: 'Game',
     component: Game,
     meta: {

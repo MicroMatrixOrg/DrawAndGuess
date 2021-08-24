@@ -24,4 +24,13 @@ export default defineConfig({
       ],
     }),
   ],
+  //配置代理
+  server: {
+    proxy: {
+      '/socket.io': {
+        target: 'http://localhost:3002',
+        changeOrigin: true,
+      },
+    },
+  },
 })

@@ -32,7 +32,7 @@
     "target": "esnext",
 
     // 要包含的类型声明文件名列表
-    "types": ["vite/client"],
+    "types": ["vite/client", "element-plus"],
 
     "isolatedModules": true,
 
