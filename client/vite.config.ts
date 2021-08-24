@@ -4,6 +4,7 @@ import styleImport from 'vite-plugin-style-import'
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  resolve: {},
   plugins: [
     vue(),
     //样式按需倒入
