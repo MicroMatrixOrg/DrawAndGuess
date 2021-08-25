@@ -1,10 +1,10 @@
 /*
  * @Author: David
  * @Date: 2021-08-23 15:09:46
- * @LastEditTime: 2021-08-24 21:34:59
+ * @LastEditTime: 2021-08-25 14:18:07
  * @LastEditors: David
  * @Description: 主要接口
- * @FilePath: \service\src\websocket.js
+ * @FilePath: /service/src/websocket.js
  * 可以输入预定的版权声明、个性签名、空行等
  */
 const io = require('socket.io');

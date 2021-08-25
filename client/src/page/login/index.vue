@@ -1,10 +1,10 @@
 <!--
  * @Author: David
  * @Date: 2021-08-23 14:45:11
- * @LastEditTime: 2021-08-24 21:49:40
+ * @LastEditTime: 2021-08-25 17:40:05
  * @LastEditors: David
  * @Description: 登录页面
- * @FilePath: \client\src\page\login\index.vue
+ * @FilePath: /client/src/page/login/index.vue
  * 可以输入预定的版权声明、个性签名、空行等
 -->
 <template>
@@ -47,7 +47,7 @@ export default defineComponent({
   },
   methods: {
     startGame() {
-      this.$refs.loginForm.validate(async (flag: boolean) => {
+      this.$refs['loginForm'].validate(async (flag: boolean) => {
         if (!flag) return
         const nickname = this.formInline.nickname
         const isExist = await this.$store.dispatch('checkUserExist', nickname)
