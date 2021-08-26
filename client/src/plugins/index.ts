@@ -1,7 +1,7 @@
 /*
  * @Author: David
  * @Date: 2021-04-15 17:32:40
- * @LastEditTime: 2021-08-24 17:46:01
+ * @LastEditTime: 2021-08-26 16:10:21
  * @LastEditors: David
  * @Description: 对所有对plugin 抛出
  * @FilePath: /client/src/plugins/index.ts

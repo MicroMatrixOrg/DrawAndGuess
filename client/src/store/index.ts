@@ -19,7 +19,7 @@ export const store = createStore<State>({
       nickname: '', // 当前用户昵称
       nicknames: [], // 房间用户昵称列表
       holder: '', // 游戏主持人
-      lines: [], // 房间的绘图信息 (画了多少根线)
+      lines: [12], // 房间的绘图信息 (画了多少根线)
     }
   },
   mutations: {
@@ -27,10 +27,10 @@ export const store = createStore<State>({
     updateConnected(state: State, connected: boolean): void {
       state.connected = connected
     },
-    updatenickname(state: State, nickname: string): void {
+    updateNickname(state: State, nickname: string): void {
       state.nickname = nickname || ''
     },
-    updatenicknames(state: State, nicknames: string[]): void {
+    updateNicknames(state: State, nicknames: string[]): void {
       state.nicknames = nicknames || []
     },
     updateHolder(state: State, holder: string): void {
@@ -39,10 +39,13 @@ export const store = createStore<State>({
     updateLines(state: State, lines: Object[]): void {
       state.lines = lines || []
     },
-    addTonicknames(state: State, nickname: string): void {
+    addToNicknames(state: State, nickname: string): void {
       if (!state.nicknames.includes(nickname)) {
         state.nicknames.push(nickname)
       }
+    },
+    delFromNicknames(state, nickname) {
+      state.nicknames = state.nicknames.filter((item) => item !== nickname)
     },
   },
   actions: {
@@ -58,7 +61,37 @@ export const store = createStore<State>({
     sendUserEnter(context): void {
       const nickname = localStorage.getItem('nickname')
       socket.emit('enter', nickname)
-      context.commit('updatenickname', nickname)
+      context.commit('updateNickname', nickname)
+    },
+    //开始游戏申请
+    sendStartGame(context, imagAnswer: string): void {
+      socket.emit('start_game', imagAnswer)
+    },
+    //结束游戏申请
+    sendStopGame(context): void {
+      socket.emit('stop_game')
+    },
+
+    //绘制新线
+    drawNewLine(context, newLine): void {
+      socket.emit('new_line', newLine)
+    },
+
+    //更新线条
+    sendUpdateNewLine(context, lastLine): void {
+      socket.emit('update_line', lastLine)
+    },
+
+    //发送答案
+    sendAnswerGame(context, inputImageName) {
+      socket.emit('answer_game', inputImageName)
+    },
+
+    //发送离开的用户
+    sendUserLeave(context) {
+      socket.emit('leave')
+      context.commit('updateNickname', '')
+      localStorage.removeItem('nickname')
     },
   },
   getters: {
