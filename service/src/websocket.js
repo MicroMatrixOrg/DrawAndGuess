@@ -1,7 +1,7 @@
 /*
  * @Author: David
  * @Date: 2021-08-23 15:09:46
- * @LastEditTime: 2021-08-25 14:18:07
+ * @LastEditTime: 2021-08-26 11:21:59
  * @LastEditors: David
  * @Description: 主要接口
  * @FilePath: /service/src/websocket.js
@@ -32,7 +32,7 @@ module.exports = httpServer => {
 
       //发送当前用户列表给当前用户
       socket.emit('room_info', {
-        nickname: Object.keys(user2socket),
+        nicknames: Object.keys(user2socket),
         holder: currentGame ? currentGame.holder : '',
         lines: currentGame ? currentGame.lines : []
       })
