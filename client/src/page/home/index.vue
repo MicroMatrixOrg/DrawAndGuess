@@ -26,7 +26,7 @@ import { defineComponent, reactive, ref, h } from 'vue'
 import AppHeader from './components/app_header.vue'
 import AppStage from './components/app_stage.vue'
 import AppSidePanel from './components/app_side_panel.vue'
-import { store } from '@/store/index'
+import { store } from '../../store/index'
 
 export default defineComponent({
   name: 'Home',
@@ -38,8 +38,15 @@ export default defineComponent({
   data() {
     return {}
   },
+  created() {
+    store.dispatch('sendUserEnter')
+  },
   methods: {},
   setup() {},
 })
 </script>
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.el-main {
+  padding: 0 20px;
+}
+</style>

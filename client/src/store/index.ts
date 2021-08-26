@@ -27,8 +27,22 @@ export const store = createStore<State>({
     updateConnected(state: State, connected: boolean): void {
       state.connected = connected
     },
-    updateNickname(state: State, nickname: string): void {
+    updatenickname(state: State, nickname: string): void {
       state.nickname = nickname || ''
+    },
+    updatenicknames(state: State, nicknames: string[]): void {
+      state.nicknames = nicknames || []
+    },
+    updateHolder(state: State, holder: string): void {
+      state.holder = holder || ''
+    },
+    updateLines(state: State, lines: Object[]): void {
+      state.lines = lines || []
+    },
+    addTonicknames(state: State, nickname: string): void {
+      if (!state.nicknames.includes(nickname)) {
+        state.nicknames.push(nickname)
+      }
     },
   },
   actions: {
@@ -44,7 +58,7 @@ export const store = createStore<State>({
     sendUserEnter(context): void {
       const nickname = localStorage.getItem('nickname')
       socket.emit('enter', nickname)
-      context.commit('uo')
+      context.commit('updatenickname', nickname)
     },
   },
   getters: {
