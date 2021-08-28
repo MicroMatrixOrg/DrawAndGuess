@@ -19,7 +19,7 @@ export const store = createStore<State>({
       nickname: '', // 当前用户昵称
       nicknames: [], // 房间用户昵称列表
       holder: '', // 游戏主持人
-      lines: [12], // 房间的绘图信息 (画了多少根线)
+      lines: [], // 房间的绘图信息 (画了多少根线)
     }
   },
   mutations: {

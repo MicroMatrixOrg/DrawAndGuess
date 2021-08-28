@@ -1,7 +1,7 @@
 <!--
  * @Author: David
  * @Date: 2021-08-23 14:45:11
- * @LastEditTime: 2021-08-25 17:40:05
+ * @LastEditTime: 2021-08-27 09:37:17
  * @LastEditors: David
  * @Description: 登录页面
  * @FilePath: /client/src/page/login/index.vue
@@ -9,6 +9,8 @@
 -->
 <template>
   <div class="login-main">
+    <el-tag v-if="connected" type="success">服务器连接成功</el-tag>
+    <el-tag v-else type="danger">服务器未连接</el-tag>
     <el-form
       :inline="true"
       :model="formInline"
@@ -32,9 +34,13 @@
 <script lang="ts">
 import { defineComponent, reactive, ref, h } from 'vue'
 import { ElMessageBox } from 'element-plus'
+import { mapState, mapGetters } from 'vuex'
 
 export default defineComponent({
   name: 'Login',
+  computed: {
+    ...mapState(['connected']),
+  },
   data() {
     return {
       //表单信息
@@ -68,6 +74,8 @@ export default defineComponent({
 <style lang="scss" scoped>
 .login-main {
   display: flex;
+  flex-direction: column;
+  gap: 30px 0;
   align-items: center;
   justify-content: center;
   height: 100%;
