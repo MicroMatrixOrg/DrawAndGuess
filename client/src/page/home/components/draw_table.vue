@@ -1,7 +1,7 @@
 <!--
  * @Author: David
  * @Date: 2021-08-28 11:21:53
- * @LastEditTime: 2021-08-28 17:51:56
+ * @LastEditTime: 2021-08-30 10:45:27
  * @LastEditors: David
  * @Description: 画布 konva封装
  * @FilePath: /client/src/page/home/components/draw_table.vue
@@ -12,16 +12,16 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onMounted, ref, reactive } from 'vue'
+import { computed, defineComponent, onMounted, ref, reactive, toRef } from 'vue'
 import Konva from 'konva'
 
-interface NewLine {
-  points: []
-  stroke: '#000'
-  strokeWidth: 5
-  lineCap?: 'round'
-  lineJoin?: 'round'
-}
+// interface NewLine {
+//   points: []
+//   stroke: '#000'
+//   strokeWidth: 5
+//   lineCap?: 'round'
+//   lineJoin?: 'round'
+// }
 
 export default defineComponent({
   props: {
@@ -58,25 +58,17 @@ export default defineComponent({
   },
 
   setup(props, context) {
-    const newLine = ref(new Konva.Line(props.newLine))
+    const newLine = new Konva.Line(props.newLine)
 
     const newLineCom = computed(() => {
-      drawLine(newLine.value)
+      drawLine(newLine)
       return
     })
     onMounted(() => {
-      drawLine(
-        new Konva.Line({
-          points: [5, 7, 100, 20],
-          stroke: '#000',
-          strokeWidth: 5,
-          lineCap: 'round',
-          lineJoin: 'round',
-        })
-      )
+      drawLine(new Konva.Line(newLineCom))
     })
 
-    const drawLine = (newLine: any) => {
+    const drawLine = (newLine: Konva.Line) => {
       const stage = new Konva.Stage({
         container: 'cacontainer',
         width: props.stageConfig.width,

@@ -1,7 +1,7 @@
 <!--
  * @Author: David
  * @Date: 2021-08-23 14:55:31
- * @LastEditTime: 2021-08-26 15:28:36
+ * @LastEditTime: 2021-08-30 16:30:25
  * @LastEditors: David
  * @Description: 游戏页面，用户列表，开始游戏
  * @FilePath: /client/src/page/home/components/app_side_panel.vue
@@ -82,8 +82,8 @@
 import { defineComponent, reactive, ref, computed } from 'vue'
 import { mapState, mapGetters } from 'vuex'
 import { ElMessage, ElMessageBox } from 'element-plus'
-import { store } from '../../../store/index'
-import router from '../../../router'
+import { store } from '@/store/index'
+import router from '@/router/index'
 
 export default defineComponent({
   computed: {

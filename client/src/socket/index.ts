@@ -1,7 +1,7 @@
 /*
  * @Author: David
  * @Date: 2021-08-24 13:56:28
- * @LastEditTime: 2021-08-26 15:25:41
+ * @LastEditTime: 2021-08-30 16:37:48
  * @LastEditors: David
  * @Description:
  * @FilePath: /client/src/socket/index.ts
@@ -14,9 +14,9 @@ import { ElMessageBox, ElNotification } from 'element-plus'
 
 const socket = SocketIO()
 
-socket.on('connect', () => {
-  console.log('连接成功')
-})
+// socket.on('connect', () => {
+//   console.log('连接成功')
+// })
 
 //自己进入房间获取房间信息
 socket.on('room_info', ({ nicknames, holder, lines }) => {

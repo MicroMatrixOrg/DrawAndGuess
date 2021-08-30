@@ -1,7 +1,7 @@
 <!--
  * @Author: David
  * @Date: 2021-08-23 14:45:11
- * @LastEditTime: 2021-08-27 09:37:17
+ * @LastEditTime: 2021-08-30 16:38:18
  * @LastEditors: David
  * @Description: 登录页面
  * @FilePath: /client/src/page/login/index.vue
@@ -35,38 +35,45 @@
 import { defineComponent, reactive, ref, h } from 'vue'
 import { ElMessageBox } from 'element-plus'
 import { mapState, mapGetters } from 'vuex'
+import { store } from '@/store/index'
+import { useRouter } from 'vue-router'
 
 export default defineComponent({
   name: 'Login',
   computed: {
     ...mapState(['connected']),
   },
-  data() {
-    return {
-      //表单信息
-      formInline: { nickname: '' },
-      //表单校验规则
-      rules: {
-        nickname: [{ required: true, message: '请输入你的昵称' }],
-      },
-    }
-  },
-  methods: {
-    startGame() {
-      this.$refs['loginForm'].validate(async (flag: boolean) => {
+
+  setup(props, context) {
+    const router = useRouter()
+    const formInline = ref({ nickname: '' })
+    const rules = ref({
+      nickname: [{ required: true, message: '请输入你的昵称' }],
+    })
+    const loginForm = ref()
+    const startGame = () => {
+      loginForm.value.validate().then(async (flag: boolean) => {
         if (!flag) return
-        const nickname = this.formInline.nickname
-        const isExist = await this.$store.dispatch('checkUserExist', nickname)
-        console.log(isExist)
+        const nickname = formInline.value.nickname
+
+        const isExist = await store.dispatch('checkUserExist', nickname)
+        // console.log(isExist)
         if (isExist) {
           ElMessageBox.alert('该昵称已被人使用啦!')
         } else {
           // 将昵称存入本地, 跳转到主页
           localStorage.setItem('nickname', nickname)
-          this.$router.push('/home')
+          router.push('/home')
         }
       })
-    },
+    }
+
+    return {
+      formInline,
+      rules,
+      loginForm,
+      startGame,
+    }
   },
 })
 </script>
