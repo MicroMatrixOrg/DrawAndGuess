@@ -1,7 +1,7 @@
 /*
  * @Author: David
  * @Date: 2021-08-23 15:09:46
- * @LastEditTime: 2021-08-26 11:21:59
+ * @LastEditTime: 2021-08-28 16:41:16
  * @LastEditors: David
  * @Description: 主要接口
  * @FilePath: /service/src/websocket.js
@@ -41,7 +41,7 @@ module.exports = httpServer => {
       socket.broadcast.emit('user_enter', nickname)
     })
 
-    socket.emit('leave', () => {
+    socket.on('leave', () => {
       const sid = socket.id;
       const nickname = socket2user[sid];
 
@@ -61,7 +61,7 @@ module.exports = httpServer => {
     //申请开始游戏
     socket.on('start_game', (finalAnswer) => {
       if (currentGame) {
-        //游戏厨艺开始阶段
+        //游戏处于开始阶段
         socket.emit('already_started', currentGame.holder);
         retrun;
       }
@@ -116,6 +116,13 @@ module.exports = httpServer => {
       if (currentGame && currentGame.lines) {
         currentGame.lines[currentGame.lines.length - 1] = line;
         socket.broadcast.emit("updating_line", line)
+      }
+    })
+
+    socket.on('update_line', (line) => {
+      if (currentGame ? currentGame.lines : []) {
+        currentGame.lines[currentGame.lines.length - 1] = line
+        socket.broadcast.emit('updating_line', line)
       }
     })
   })
