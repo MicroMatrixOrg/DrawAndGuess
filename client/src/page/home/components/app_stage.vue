@@ -1,7 +1,7 @@
 <!--
  * @Author: David
  * @Date: 2021-08-23 14:55:41
- * @LastEditTime: 2021-09-02 16:31:52
+ * @LastEditTime: 2021-09-10 17:22:13
  * @LastEditors: David
  * @Description: 游戏画布页面
  * @FilePath: /client/src/page/home/components/app_stage.vue
@@ -12,8 +12,13 @@
     ref="wrapper"
     :body-style="{ padding: 0 }"
     @mousedown="mousedownHandler"
+    @mousemove="mouseMoveHandler"
+    @mouseup="mouseUpHandler"
   >
-    <konva-component :stageConfig="stageConfig"></konva-component>
+    <konva-component
+      :stageConfig="stageConfig"
+      :lines="lines"
+    ></konva-component>
   </el-card>
 </template>
 
@@ -55,11 +60,12 @@ export default defineComponent({
     const strokeWidth = ref(5)
 
     //线的集合
-    let lines: Array<Pointer> = ref([])
+    let lines = reactive<Pointer[]>([])
 
     // 鼠标按下
     const mousedownHandler = (e: any): void => {
       if (!isGameHolder || !isGameHolder) return
+      painting.value = true
       let lineObj: Pointer = {
         points: [e.layerX, e.layerY],
         stroke: '#000',
@@ -67,8 +73,19 @@ export default defineComponent({
         lineCap: 'round',
         lineJoin: 'round',
       }
-      lines.value.push(lineObj)
-      console.log(lines.value)
+      lines.push(lineObj)
+      // 本地画线, 存到vuex中
+      // 请求服务器
+    }
+    const mouseMoveHandler = (e: any): void => {
+      if (!painting.value) return
+      painting.value = true
+      let lastLine = lines[lines.length - 1]
+      lastLine.points = lastLine.points.concat([e.layerX, e.layerY])
+    }
+
+    const mouseUpHandler = (e: any): void => {
+      painting.value = false
     }
 
     return {
@@ -77,7 +94,11 @@ export default defineComponent({
       stroke,
       strokeWidth,
       isGameHolder,
+      lines,
+
       mousedownHandler,
+      mouseMoveHandler,
+      mouseUpHandler,
     }
   },
 })

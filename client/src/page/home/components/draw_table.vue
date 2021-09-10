@@ -1,18 +1,26 @@
 <!--
  * @Author: David
  * @Date: 2021-08-28 11:21:53
- * @LastEditTime: 2021-08-30 10:45:27
+ * @LastEditTime: 2021-09-10 17:58:01
  * @LastEditors: David
  * @Description: 画布 konva封装
  * @FilePath: /client/src/page/home/components/draw_table.vue
  * 可以输入预定的版权声明、个性签名、空行等
 -->
 <template>
-  <div id="cacontainer" class=""></div>
+  <ul id="cacontainer" class=""></ul>
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onMounted, ref, reactive, toRef } from 'vue'
+import {
+  computed,
+  defineComponent,
+  onMounted,
+  ref,
+  reactive,
+  toRef,
+  watch,
+} from 'vue'
 import Konva from 'konva'
 
 // interface NewLine {
@@ -43,6 +51,11 @@ export default defineComponent({
       type: Number,
       default: 5,
     },
+    //线条的集合
+    lines: {
+      type: Array,
+      default: [],
+    },
     //一条新线
     newLine: {
       type: Object,
@@ -58,27 +71,33 @@ export default defineComponent({
   },
 
   setup(props, context) {
+    let layer = new Konva.Layer()
     const newLine = new Konva.Line(props.newLine)
-
+    watch(props.lines, (lines, prevLines) => {
+      let lastLine = lines[lines.length - 1]
+      console.log(lastLine)
+    })
     const newLineCom = computed(() => {
       drawLine(newLine)
       return
     })
     onMounted(() => {
-      drawLine(new Konva.Line(newLineCom))
+      stage()
     })
 
     const drawLine = (newLine: Konva.Line) => {
+      layer.add(newLine)
+
+      // add the layer to the stage
+    }
+
+    const stage = () => {
       const stage = new Konva.Stage({
         container: 'cacontainer',
         width: props.stageConfig.width,
         height: props.stageConfig.height,
       })
-      let layer = new Konva.Layer()
 
-      layer.add(newLine)
-
-      // add the layer to the stage
       stage.add(layer)
     }
   },
@@ -86,4 +105,3 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped></style>
-y
