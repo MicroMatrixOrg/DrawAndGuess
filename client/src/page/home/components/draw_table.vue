@@ -1,7 +1,7 @@
 <!--
  * @Author: David
  * @Date: 2021-08-28 11:21:53
- * @LastEditTime: 2021-09-10 17:58:01
+ * @LastEditTime: 2021-09-13 17:22:32
  * @LastEditors: David
  * @Description: 画布 konva封装
  * @FilePath: /client/src/page/home/components/draw_table.vue
@@ -18,7 +18,7 @@ import {
   onMounted,
   ref,
   reactive,
-  toRef,
+  toRefs,
   watch,
 } from 'vue'
 import Konva from 'konva'
@@ -72,18 +72,16 @@ export default defineComponent({
 
   setup(props, context) {
     let layer = new Konva.Layer()
-    const newLine = new Konva.Line(props.newLine)
     watch(props.lines, (lines, prevLines) => {
-      let lastLine = lines[lines.length - 1]
-      console.log(lastLine)
+      let lastLine: any = lines[lines.length - 1]
+      drawLine(new Konva.Line(lastLine))
     })
-    const newLineCom = computed(() => {
-      drawLine(newLine)
-      return
-    })
-    onMounted(() => {
+
+    watch(props.stageConfig, (stageConfig, pre) => {
       stage()
     })
+
+    onMounted(() => {})
 
     const drawLine = (newLine: Konva.Line) => {
       layer.add(newLine)

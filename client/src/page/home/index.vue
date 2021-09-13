@@ -1,6 +1,6 @@
 <template>
   <div class="game-container-wrap">
-    <el-container>
+    <el-container style="height: calc(100%)">
       <!-- 布局：头部 -->
       <el-header height="30">
         <app-header />
@@ -48,5 +48,9 @@ export default defineComponent({
 <style lang="scss" scoped>
 .el-main {
   padding: 0 20px;
+}
+.game-container-wrap {
+  height: 100vh;
+  width: 100vw;
 }
 </style>
