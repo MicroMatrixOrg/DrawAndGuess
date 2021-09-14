@@ -1,7 +1,7 @@
 <!--
  * @Author: David
  * @Date: 2021-08-23 14:55:31
- * @LastEditTime: 2021-08-30 16:30:25
+ * @LastEditTime: 2021-09-14 11:17:12
  * @LastEditors: David
  * @Description: 游戏页面，用户列表，开始游戏
  * @FilePath: /client/src/page/home/components/app_side_panel.vue
@@ -34,6 +34,7 @@
         size="small"
         icon="el-icon-delete"
         v-if="isGameStarted && holder === nickname"
+        @click="stopGameHandler"
         >终止游戏</el-button
       >
 
@@ -102,6 +103,10 @@ export default defineComponent({
       //清空答案
       expectImageName.value = ''
     }
+
+    const stopGameHandler = () => {
+      store.dispatch('sendStopGame')
+    }
     //保存游戏答案
     const saveDialogHandler = () => {
       //1、答案不能为空
@@ -141,6 +146,7 @@ export default defineComponent({
       saveDialogHandler,
       saveAnswerDialogHandler,
       exitHanle,
+      stopGameHandler,
     }
   },
 })

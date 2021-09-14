@@ -2,6 +2,10 @@ import { InjectionKey } from 'vue'
 import { createStore, Store } from 'vuex'
 import socket from '../socket/index'
 
+interface Line {
+  points?: Object
+}
+
 export interface State {
   connected: boolean
   nickname: string // 当前用户昵称
@@ -44,6 +48,13 @@ export const store = createStore<State>({
         state.nicknames.push(nickname)
       }
     },
+    drawNewLine(state, newLine) {
+      state.lines.push(newLine)
+    },
+    updateNewLine(state, lastLine) {
+      const line: Line = state.lines[state.lines.length - 1]
+      line.points = lastLine.points
+    },
     delFromNicknames(state, nickname) {
       state.nicknames = state.nicknames.filter((item) => item !== nickname)
     },
@@ -73,7 +84,7 @@ export const store = createStore<State>({
     },
 
     //绘制新线
-    drawNewLine(context, newLine): void {
+    sendDrawNewLine(context, newLine): void {
       socket.emit('new_line', newLine)
     },
 

@@ -1,7 +1,7 @@
 <!--
  * @Author: David
  * @Date: 2021-08-23 14:55:41
- * @LastEditTime: 2021-09-13 18:00:06
+ * @LastEditTime: 2021-09-14 11:14:51
  * @LastEditors: David
  * @Description: 游戏画布页面
  * @FilePath: /client/src/page/home/components/app_stage.vue
@@ -65,6 +65,7 @@ export default defineComponent({
     const stageConfig = ref({ width: 0, height: 0 })
 
     const isGameHolder = computed(() => store.getters.isGameHolder)
+    console.log(isGameHolder.value)
     //绘画状态
     const painting = ref(false)
     const stroke = ref('#000')
@@ -78,9 +79,14 @@ export default defineComponent({
       width: 0,
       height: 0,
     })
-    watch(screen.value, (newval, oldval) => {
+
+    const calcCanvas = () => {
       stageConfig.value.width = wrapper.value.$el.clientWidth
       stageConfig.value.height = wrapper.value.$el.clientHeight
+    }
+
+    watch(screen.value, (newval, oldval) => {
+      calcCanvas()
     })
     onMounted(() => {
       window.addEventListener(
@@ -90,13 +96,12 @@ export default defineComponent({
           screen.value.height = document.body.clientHeight
         }, 1000)
       )
-
-      console.log(wrapper.value.$el.clientWidth)
+      calcCanvas()
     })
 
     // 鼠标按下
     const mousedownHandler = (e: any): void => {
-      if (!isGameHolder || !isGameHolder) return
+      if (!isGameHolder || !isGameHolder.value) return
       painting.value = true
       let lineObj: Pointer = {
         points: [e.layerX, e.layerY],
@@ -107,13 +112,18 @@ export default defineComponent({
       }
       lines.push(lineObj)
       // 本地画线, 存到vuex中
+      store.commit('drawNewLine', lineObj)
       // 请求服务器
+      store.dispatch('sendDrawNewLine', lineObj)
     }
     const mouseMoveHandler = (e: any): void => {
       if (!painting.value) return
       painting.value = true
       let lastLine = lines[lines.length - 1]
       lastLine.points = lastLine.points.concat([e.layerX, e.layerY])
+      store.commit('updateNewLine', lastLine)
+      // 请求服务器
+      store.dispatch('sendUpdateNewLine', lastLine)
     }
 
     const mouseUpHandler = (e: any): void => {
