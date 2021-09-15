@@ -1,7 +1,7 @@
 <!--
  * @Author: David
  * @Date: 2021-08-28 11:21:53
- * @LastEditTime: 2021-09-13 17:22:32
+ * @LastEditTime: 2021-09-15 14:23:38
  * @LastEditors: David
  * @Description: 画布 konva封装
  * @FilePath: /client/src/page/home/components/draw_table.vue
@@ -81,7 +81,12 @@ export default defineComponent({
       stage()
     })
 
-    onMounted(() => {})
+    onMounted(() => {
+      for (let i = 0; i < props.lines.length; i++) {
+        let firstLine: any = props.lines[i]
+        drawLine(new Konva.Line(firstLine))
+      }
+    })
 
     const drawLine = (newLine: Konva.Line) => {
       layer.add(newLine)

@@ -1,13 +1,14 @@
 <!--
  * @Author: David
  * @Date: 2021-08-23 14:55:41
- * @LastEditTime: 2021-09-14 11:14:51
+ * @LastEditTime: 2021-09-15 14:37:23
  * @LastEditors: David
  * @Description: 游戏画布页面
  * @FilePath: /client/src/page/home/components/app_stage.vue
  * 可以输入预定的版权声明、个性签名、空行等
 -->
 <template>
+  {{ test }}
   <el-card
     ref="wrapper"
     :body-style="{ padding: 0 }"
@@ -48,7 +49,6 @@ interface Pointer {
 
 export default defineComponent({
   computed: {
-    ...mapState(['lines']),
     ...mapGetters(['isGameHolder', 'isGameStarted']),
   },
   components: {
@@ -65,15 +65,14 @@ export default defineComponent({
     const stageConfig = ref({ width: 0, height: 0 })
 
     const isGameHolder = computed(() => store.getters.isGameHolder)
-    console.log(isGameHolder.value)
     //绘画状态
     const painting = ref(false)
     const stroke = ref('#000')
     const strokeWidth = ref(5)
 
     //线的集合
-    let lines = reactive<Pointer[]>([])
-
+    // let lines = reactive<Pointer[]>([])
+    let lines = computed<any[]>(() => store.state.lines)
     //获取当前页面框高
     const screen = ref({
       width: 0,
@@ -110,7 +109,7 @@ export default defineComponent({
         lineCap: 'round',
         lineJoin: 'round',
       }
-      lines.push(lineObj)
+      lines.value.push(lineObj)
       // 本地画线, 存到vuex中
       store.commit('drawNewLine', lineObj)
       // 请求服务器
@@ -119,7 +118,7 @@ export default defineComponent({
     const mouseMoveHandler = (e: any): void => {
       if (!painting.value) return
       painting.value = true
-      let lastLine = lines[lines.length - 1]
+      let lastLine: any = lines.value[lines.value.length - 1]
       lastLine.points = lastLine.points.concat([e.layerX, e.layerY])
       store.commit('updateNewLine', lastLine)
       // 请求服务器

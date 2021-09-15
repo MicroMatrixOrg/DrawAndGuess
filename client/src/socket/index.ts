@@ -1,7 +1,7 @@
 /*
  * @Author: David
  * @Date: 2021-08-24 13:56:28
- * @LastEditTime: 2021-08-30 16:37:48
+ * @LastEditTime: 2021-09-15 14:04:53
  * @LastEditors: David
  * @Description:
  * @FilePath: /client/src/socket/index.ts
@@ -56,7 +56,7 @@ socket.on('already_study', (holder) => {
 })
 
 //处理终止游戏
-socket.on('game_stop', () => {
+socket.on('game_stoped', () => {
   //1、清楚相关数据
   store.commit('updateHolder', '')
   store.commit('updateLines', [])
